@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">       
+  <start>
+     <element name="publicHoliday">
+     	<element name="holidayName">
+             <data type="string"/>
+        </element>
+        <element name="Month">
+            <data type="string"/> 
+        </element>
+        <element name="Day">
+            <data type="integer"/> 
+        </element>                   
+     </element>
+  </start> 
+</grammar>

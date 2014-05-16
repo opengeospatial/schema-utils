@@ -1,0 +1,6 @@
+# sample from "RELAX NG Compact Syntax Tutorial"
+inline = inline.class*
+inline.class =
+  text
+  | element bold { inline }
+  | element italic { inline }

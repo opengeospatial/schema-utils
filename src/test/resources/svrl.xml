@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svrl:schematron-output xmlns:svrl="http://purl.oclc.org/dsdl/svrl"
+  xmlns:iso="http://purl.oclc.org/dsdl/schematron"
+  xmlns:saxon="http://saxon.sf.net/"
+  xmlns:db="http://docbook.org/ns/docbook"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  title=""
+  schemaVersion="ISO-19757-3">
+
+   <svrl:ns-prefix-in-attribute-values uri="http://docbook.org/ns/docbook" prefix="db"/>
+   <svrl:active-pattern document="file:/E:/util/schematron/resources/DocBook-Tables.xml"
+                        id="html-table"
+                        name="html-table"/>
+   <svrl:fired-rule context="db:table[db:caption]"/>
+   <svrl:fired-rule context="//db:tr"/>
+   <svrl:fired-rule context="//db:tr"/>
+   <svrl:fired-rule context="//db:tr"/>
+   <svrl:active-pattern document="file:/E:/util/schematron/resources/DocBook-Tables.xml"
+                        id="CALS-table"
+                        name="CALS-table"/>
+   <svrl:fired-rule context="db:table[db:title]"/>
+   <svrl:fired-rule context="//db:row"/>
+   <svrl:fired-rule context="//db:row"/>
+   <svrl:fired-rule context="//db:row"/>
+   <svrl:failed-assert test="db:entry"
+                       location="/*:book[namespace-uri()='http://docbook.org/ns/docbook'][1]/*:chapter[namespace-uri()='http://docbook.org/ns/docbook'][1]/*:table[namespace-uri()='http://docbook.org/ns/docbook'][1]/*:tgroup[namespace-uri()='http://docbook.org/ns/docbook'][1]/*:tbody[namespace-uri()='http://docbook.org/ns/docbook'][1]/*:row[namespace-uri()='http://docbook.org/ns/docbook'][2]">
+      <svrl:text>row element should contain entries</svrl:text>
+   </svrl:failed-assert>
+</svrl:schematron-output>

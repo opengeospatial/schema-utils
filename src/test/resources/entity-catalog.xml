@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+
+  <system systemId="http://www.w3.org/2009/01/xml.xsd"
+          uri="./xsd/xml.xsd" />
+  <system systemId="http://www.w3.org/2001/xml.xsd"
+          uri="./xsd/xml.xsd" />
+  <system systemId="http://www.w3.org/XML/2008/06/xlink.xsd"
+          uri="./xsd/xlink.xsd" />
+  <system systemId="http://www.w3.org/1999/xlink.xsd"
+          uri="./xsd/xlink.xsd" />
+  <system systemId="http://www.example.net/shiporder.xsd"
+          uri="./xsd/shiporder.xsd" />
+  <system systemId="http://www.example.net/address.xsd"
+          uri="./xsd/address.xsd" />
+  <system systemId="http://www.openmath.org/standard/openmath2.rnc"
+          uri="./relax/openmath2.rnc" />
+
+  <!-- Map target namespace to schema resource -->
+  <uri name="http://www.example.com/IPO"
+       uri="./xsd/ipo.xsd"/>
+  <uri name="http://www.w3.org/2005/Atom"
+       uri="./relax/atom.rnc"/>
+</catalog>

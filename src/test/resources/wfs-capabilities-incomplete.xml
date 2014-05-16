@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:WFS_Capabilities version="2.0.0" 
+  xmlns="http://www.opengis.net/ows/1.1"
+  xmlns:xlink="http://www.w3.org/1999/xlink" 
+  xmlns:wfs="http://www.opengis.net/wfs/2.0"
+  xmlns:ows="http://www.opengis.net/ows/1.1">
+
+  <ServiceProvider>
+    <ProviderName>ACME Corp</ProviderName>
+    <ServiceContact>
+      <IndividualName>Phileas Fogg</IndividualName>
+    </ServiceContact>
+  </ServiceProvider>
+  <OperationsMetadata xmlns="http://www.opengis.net/ows/1.1">
+    <Operation name="GetCapabilities">
+      <DCP>
+        <HTTP>
+          <Get xlink:href="http://localhost"/>
+        </HTTP>
+      </DCP>
+    </Operation>
+    <Operation name="GetFeature">
+      <DCP>
+        <HTTP>
+          <Get xlink:href="http://localhost"/>
+        </HTTP>
+      </DCP>
+    </Operation>
+    <Constraint name="ImplementsSimpleWFS">
+      <ValuesReference ows:reference="http://www.w3.org/2001/XMLSchema#boolean"/>
+      <DefaultValue>TRUE</DefaultValue>
+    </Constraint>
+  </OperationsMetadata>
+
+</wfs:WFS_Capabilities>

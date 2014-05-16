@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="shiporder" type="shipordertype">
+
+<xs:complexType name="shipordertype">
+  <xs:sequence>
+    <xs:element name="orderperson" type="xs:string"/>
+    <xs:element name="shipto" type="shiptotype"/>
+    <xs:element name="item" maxOccurs="unbounded" type="itemtype"/>
+  </xs:sequence>
+  <xs:attribute name="orderid" type="orderidtype" use="required"/>
+</xs:complexType>
+
+<xs:simpleType name="orderidtype">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="[0-9]{6}"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:complexType name="shiptotype">
+  <xs:sequence>
+    <xs:element name="name" type="xs:string"/>
+    <xs:element name="address" type="xs:string"/>
+    <xs:element name="city" type="xs:string"/>
+    <xs:element name="country" type="xs:string"/>
+  </xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="itemtype">
+  <xs:sequence>
+    <xs:element name="title" type="xs:string"/>
+    <xs:element name="note" type="xs:string" minOccurs="0"/>
+    <xs:element name="quantity" type="xs:positiveInteger"/>
+    <xs:element name="price" type="xs:decimal"/>
+  </xs:sequence>
+</xs:complexType>
+
+</xs:schema>

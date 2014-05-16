@@ -1,0 +1,243 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.opengis.cite</groupId>
+  <artifactId>schema-utils</artifactId>
+  <version>1.5-SNAPSHOT</version>
+  <packaging>jar</packaging>
+  <name>Schema Validation Utilities</name>
+  <description>
+  Provides support for validating XML representations using the following 
+  schema languages: W3C XML Schema 1.0, Schematron (ISO/IEC 19757-3:2006), 
+  and RELAX NG (ISO/IEC 19757-2:2008). It is also possible to access and 
+  query the post-schema-validation infoset (PSVI) using the Xerces XML 
+  Schema API.
+  </description>
+  <url>http://cite.opengeospatial.org/</url>
+  <licenses>
+    <license>
+      <name>Apache License, Version 2.0</name>
+      <url>http://opensource.org/licenses/Apache-2.0</url>
+    </license>
+  </licenses>
+
+  <organization>
+    <name>Open Geospatial Consortium</name>
+    <url>http://www.opengeospatial.org/</url>
+  </organization>
+  <scm>
+    <developerConnection>
+    scm:svn:https://svn.opengeospatial.org/ogc-projects/cite/ets/utils/schema-utils/trunk
+    </developerConnection>
+  </scm>
+  <issueManagement>
+    <system>GitHub Issue Tracker</system>
+    <url>https://github.com/opengeospatial/schema-utils/issues</url>
+  </issueManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.17</version>
+        <configuration>
+          <!-- Disable TestNG runner (enabled due to compile dependency) -->
+          <testNGArtifactName>null:null</testNGArtifactName>
+          <junitArtifactName>junit:junit</junitArtifactName>
+          <includes>
+            <include>**/Verify*.java</include>
+            <include>**/*Tests.java</include>
+            <include>**/*Test.java</include>
+          </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <docfilessubdirs>true</docfilessubdirs>
+          <show>package</show>
+          <links>
+            <link>http://xerces.apache.org/xerces2-j/javadocs/xerces2/</link>
+            <link>http://xerces.apache.org/xerces2-j/javadocs/xni/</link>
+            <link>http://xerces.apache.org/xml-commons/components/apidocs/resolver/</link>
+          </links>
+        </configuration>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.4</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+            <manifestEntries>
+              <Build-Time>${maven.build.timestamp}</Build-Time>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5</version>
+        <configuration>
+          <tagBase>https://svn.opengeospatial.org/ogc-projects/cite/ets/utils/schema-utils/tags</tagBase>
+          <tagNameFormat>@{project.version}</tagNameFormat>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.3</version>
+        <executions>
+          <execution>
+            <id>site-package</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+            <version>1.5</version>
+          </dependency>
+        </dependencies>
+        <configuration>
+          <relativizeDecorationLinks>false</relativizeDecorationLinks>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.build.timestamp.format>yyyy-MM-dd'T'HH:mm:ssZ</maven.build.timestamp.format>
+    <saxon.version>9.0.0.8</saxon.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon9-dom</artifactId>
+      <version>${saxon.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.sourceforge.saxon</groupId>
+      <artifactId>saxon9-s9api</artifactId>
+      <version>${saxon.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>xerces</groupId>
+      <artifactId>xercesImpl</artifactId>
+      <version>2.11.0</version>
+    </dependency>
+    <dependency>
+      <groupId>xml-resolver</groupId>
+      <artifactId>xml-resolver</artifactId>
+      <version>1.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.thaiopensource</groupId>
+      <artifactId>jing</artifactId>
+      <version>20091111</version>
+      <exclusions>
+        <exclusion>
+          <groupId>net.sf.saxon</groupId>
+          <artifactId>saxon</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xerces</groupId>
+          <artifactId>xercesImpl</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>xml-apis</groupId>
+          <artifactId>xml-apis</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <docfilessubdirs>true</docfilessubdirs>
+          <show>package</show>
+          <links>
+            <link>http://xerces.apache.org/xerces2-j/javadocs/xerces2/</link>
+            <link>http://xerces.apache.org/xerces2-j/javadocs/xni/</link>
+            <link>http://xerces.apache.org/xml-commons/components/apidocs/resolver/</link>
+          </links>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>javadoc</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.7</version>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>license</report>
+              <report>issue-tracking</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <repositories>
+    <!-- NOTE: This is required in order to obtain the old Saxon-B 9.0 libraries. 
+    Alternatively, fetch the binaries from SourceForge and place them into the 
+    local repository. -->
+    <repository>
+      <id>opengeospatial-cite</id>
+      <name>OGC CITE Repository</name>
+      <url>https://svn.opengeospatial.org/ogc-projects/cite/maven</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+</project>
