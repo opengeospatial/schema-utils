@@ -3,6 +3,7 @@
 ## 1.5-SNAPSHOT (2014-MM-DD)
 This release introduces site content; the functionality of the library is unchanged.
 
+* Modify POM for GitHub.
 * Add site content.
 * Change license to Apache License, Version 2.0.
 

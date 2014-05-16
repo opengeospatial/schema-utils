@@ -26,9 +26,10 @@
     <url>http://www.opengeospatial.org/</url>
   </organization>
   <scm>
-    <developerConnection>
-    scm:svn:https://svn.opengeospatial.org/ogc-projects/cite/ets/utils/schema-utils/trunk
-    </developerConnection>
+    <connection>scm:git:https://github.com/opengeospatial/schema-utils.git</connection>
+    <developerConnection>scm:git:git@github.com:opengeospatial/schema-utils.git</developerConnection>
+    <url>https://github.com/opengeospatial/schema-utils</url>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Tracker</system>
@@ -94,6 +95,7 @@
             </manifest>
             <manifestEntries>
               <Build-Time>${maven.build.timestamp}</Build-Time>
+              <Build-Revision>${buildNumber}</Build-Revision>
             </manifestEntries>
           </archive>
         </configuration>
@@ -103,7 +105,6 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5</version>
         <configuration>
-          <tagBase>https://svn.opengeospatial.org/ogc-projects/cite/ets/utils/schema-utils/tags</tagBase>
           <tagNameFormat>@{project.version}</tagNameFormat>
         </configuration>
       </plugin>
@@ -129,6 +130,24 @@
         </dependencies>
         <configuration>
           <relativizeDecorationLinks>false</relativizeDecorationLinks>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>buildnumber-maven-plugin</artifactId>
+        <version>1.3</version>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>create</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <doCheck>false</doCheck>
+          <doUpdate>false</doUpdate>
+          <shortRevisionLength>7</shortRevisionLength>
         </configuration>
       </plugin>
     </plugins>
