@@ -1,10 +1,11 @@
 ﻿# Release Notes
 
-## 1.5-SNAPSHOT (2014-MM-DD)
-This release introduces site content; the functionality of the library is unchanged.
+## 1.5 (2014-05-20)
+The project is now hosted at GitHub. This release introduces new site content, 
+but the essential functionality of the library is unchanged.
 
 * Modify POM for GitHub.
-* Add site content.
+* Add new site content.
 * Change license to Apache License, Version 2.0.
 
 ## 1.4 (2014-04-15)

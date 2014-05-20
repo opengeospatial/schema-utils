@@ -1,4 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opengis.cite</groupId>
@@ -13,7 +15,7 @@
   query the post-schema-validation infoset (PSVI) using the Xerces XML 
   Schema API.
   </description>
-  <url>http://cite.opengeospatial.org/</url>
+  <url>http://opengeospatial.github.io/schema-utils/</url>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -94,6 +96,7 @@
               <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
             </manifest>
             <manifestEntries>
+              <Build-Host>${hostname}</Build-Host>
               <Build-Time>${maven.build.timestamp}</Build-Time>
               <Build-Revision>${buildNumber}</Build-Revision>
             </manifestEntries>
@@ -147,7 +150,7 @@
         <configuration>
           <doCheck>false</doCheck>
           <doUpdate>false</doUpdate>
-          <shortRevisionLength>7</shortRevisionLength>
+          <shortRevisionLength>10</shortRevisionLength>
         </configuration>
       </plugin>
     </plugins>
@@ -246,10 +249,31 @@
     </plugins>
   </reporting>
 
+  <profiles>
+    <profile>
+      <id>windows</id>
+      <activation>
+        <os><family>windows</family></os>
+      </activation>
+      <properties>
+        <hostname>${env.COMPUTERNAME}</hostname>
+      </properties>
+    </profile>
+    <profile>
+      <id>unix</id>
+      <activation>
+        <os><family>unix</family></os>
+      </activation>
+      <properties>
+        <hostname>${env.HOSTNAME}</hostname>
+      </properties>
+    </profile>
+  </profiles>
+
   <repositories>
-    <!-- NOTE: This is required in order to obtain the old Saxon-B 9.0 libraries. 
-    Alternatively, fetch the binaries from SourceForge and place them into the 
-    local repository. -->
+    <!-- NOTE: This is currently required in order to obtain the old Saxon-B 9.0 
+    libraries. Alternatively, fetch the binaries from SourceForge and place them 
+    into the local repository. -->
     <repository>
       <id>opengeospatial-cite</id>
       <name>OGC CITE Repository</name>
