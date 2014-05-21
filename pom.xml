@@ -37,6 +37,13 @@
     <system>GitHub Issue Tracker</system>
     <url>https://github.com/opengeospatial/schema-utils/issues</url>
   </issueManagement>
+  <developers>
+    <developer>
+      <name>R. Martell</name>
+      <url>https://github.com/rjmartell</url>
+      <timezone>America/Vancouver</timezone>
+    </developer>
+  </developers>
 
   <build>
     <plugins>

@@ -1,4 +1,4 @@
-# Schema Validation Utilities
+__Schema Validation Utilities__
 
 The `schema-utils` library is used by several [OGC](http://www.opengeospatial.org/) 
 conformance test suites. It provides support for validating XML representations 
