@@ -2,7 +2,7 @@
 
 ## 1.6 (2015-04-28)
 This release includes no functional changes. Several dependencies and Maven 
-plugins have been updated to the latest releases.
+plugins have been updated. Accessing a special repository is no longer required.
 
 ## 1.5 (2014-05-20)
 The project is now hosted at GitHub. This release introduces new site content, 
