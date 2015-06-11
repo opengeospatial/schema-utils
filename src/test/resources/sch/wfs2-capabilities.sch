@@ -49,7 +49,7 @@
   
   <iso:pattern id="ConformanceStatementPattern">
     <iso:p>Implementation conformance statement. See ISO 19142:2010, cl. 8.3.5.3, Table 13.</iso:p>
-    <iso:rule context="//ows:OperationsMetadata">
+    <iso:rule context="ows:OperationsMetadata">
       <iso:assert test="ows:Constraint[@name='ImplementsSimpleWFS']/ows:DefaultValue">
       The service constraint 'ImplementsSimpleWFS' has no ows:DefaultValue child.
       </iso:assert>

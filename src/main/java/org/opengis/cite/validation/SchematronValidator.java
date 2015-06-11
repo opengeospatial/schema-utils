@@ -36,7 +36,7 @@ import net.sf.saxon.s9api.XsltTransformer;
  * defined in an ISO Schematron (ISO 19757-3) schema. The results are presented
  * in an SVRL report. The schema may incorporate abstract patterns and
  * inclusions (sch:include and xi:include elements).
- * 
+ *
  * @see <a
  *      href="http://standards.iso.org/ittf/PubliclyAvailableStandards/c040833_ISO_IEC_19757-3_2006(E).zip"
  *      >ISO 19757-3:2006</a>
@@ -56,15 +56,12 @@ public class SchematronValidator {
     /**
      * Construct a validator for the given Schematron schema and phase (pattern
      * set).
-     * 
-     * @param schema
-     *            The ISO Schematron schema to use for validation.
-     * @param phase
-     *            The active phase (rule subset). If {@code null} the default
-     *            phase is used.
-     * @throws Exception
-     *             If any error occurs while attempting to read or preprocess
-     *             the schema.
+     *
+     * @param schema The ISO Schematron schema to use for validation.
+     * @param phase The active phase (rule subset). If {@code null} the default
+     * phase is used.
+     * @throws Exception If any error occurs while attempting to read or
+     * preprocess the schema.
      */
     public SchematronValidator(Source schema, String phase) throws Exception {
         if (schema == null) {
@@ -80,12 +77,10 @@ public class SchematronValidator {
     /**
      * Validates a Schematron schema against the official RELAX NG grammar (ISO
      * 19757-3, Annex A).
-     * 
-     * @param schema
-     *            A Source to obtain the schema from.
+     *
+     * @param schema A Source to obtain the schema from.
      * @return The ErrorHandler that received reported errors, if any.
-     * @throws IOException
-     *             If an error occurs while reading the schema.
+     * @throws IOException If an error occurs while reading the schema.
      */
     public ValidationErrorHandler validateSchema(Source schema)
             throws IOException {
@@ -103,7 +98,7 @@ public class SchematronValidator {
     /**
      * Get the number of violations (failed assertions and successful reports)
      * for the validation episode.
-     * 
+     *
      * @return An {@code int} value equal to or greater than zero.
      */
     public int getRuleViolationCount() {
@@ -112,9 +107,9 @@ public class SchematronValidator {
 
     /**
      * Indicates the occurrence of any rule violations.
-     * 
+     *
      * @return {@code true} if any rule violations have been detected;
-     *         {@code false} otherwise.
+     * {@code false} otherwise.
      */
     public boolean ruleViolationsDetected() {
         return (totalRuleViolations > 0 ? true : false);
@@ -122,10 +117,9 @@ public class SchematronValidator {
 
     /**
      * Sets parameters required to evaluate Schematron rules.
-     * 
-     * @param params
-     *            A {@literal Map<String,String>} object containing parameter
-     *            names and values.
+     *
+     * @param params A {@literal Map<String,String>} object containing parameter
+     * names and values.
      */
     public void setParameters(Map<String, String> params) {
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -139,9 +133,9 @@ public class SchematronValidator {
     /**
      * Validates the specified source XML document and returns the results in an
      * SVRL report.
-     * 
-     * @param xmlSource
-     *            The XML resource to validate.
+     *
+     * @param xmlSource The XML resource to validate. A DOMSource must wrap a
+     * Document node (otherwise a RuntimeException will be thrown).
      * @return A DOMResult object containing the validation results.
      */
     public DOMResult validate(Source xmlSource) {
@@ -172,14 +166,11 @@ public class SchematronValidator {
      * Creates an immutable representation of a compiled stylesheet that will
      * generate an SVRL representation of the validation results when run
      * against an instance document.
-     * 
-     * @param schema
-     *            A Source to read a Schematron schema.
-     * @param phase
-     *            The phase (patterns sets) to check.
+     *
+     * @param schema A Source to read a Schematron schema.
+     * @param phase The phase (patterns sets) to check.
      * @return A compiled stylesheet ready for execution.
-     * @throws Exception
-     *             If the schema cannot be compiled for any reason.
+     * @throws Exception If the schema cannot be compiled for any reason.
      */
     final XsltExecutable compileSchema(Source schema, String phase)
             throws Exception {
@@ -191,10 +182,10 @@ public class SchematronValidator {
                 SchematronValidator.class.getResourceAsStream(INCLUDE_XSLT)));
         XsltExecutable abstractXslt = compiler.compile(new StreamSource(
                 SchematronValidator.class
-                        .getResourceAsStream(ABSTRACT_EXPAND_XSLT)));
+                .getResourceAsStream(ABSTRACT_EXPAND_XSLT)));
         XsltExecutable svrlXslt = compiler
                 .compile(new StreamSource(SchematronValidator.class
-                        .getResourceAsStream(SVRL_REPORT_XSLT)));
+                                .getResourceAsStream(SVRL_REPORT_XSLT)));
         // Set up pre-processing chain to enable:
         // 1. Inclusions
         // 2. Abstract patterns
@@ -245,9 +236,8 @@ public class SchematronValidator {
 
     /**
      * Counts all rule violations: failed asserts and successful reports).
-     * 
-     * @param results
-     *            The validation results (svrl:schematron-output).
+     *
+     * @param results The validation results (svrl:schematron-output).
      * @return An integer value.
      */
     private int countRuleViolations(XdmDestination results) {
