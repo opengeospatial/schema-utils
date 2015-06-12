@@ -215,10 +215,7 @@ public class VerifySchematronValidator {
     }
 
     @Test
-    public void validateElementThrowsRuntimeException() throws Exception {
-        // Saxon rejects DOMSource wrapping an Element node
-        thrown.expect(ClassCastException.class);
-        thrown.expectMessage("TinyElementImpl cannot be cast to net.sf.saxon.om.DocumentInfo");
+    public void validateDocumentFragment() throws Exception {
         URL url = this.getClass().getResource("/sch/wfs2-capabilities.sch");
         Source schemaSource = new StreamSource(url.openStream(), url.toString());
         SchematronValidator iut = new SchematronValidator(schemaSource,
@@ -226,28 +223,7 @@ public class VerifySchematronValidator {
         Document doc = docBuilder.parse(getClass().getResourceAsStream(
                 "/wfs-capabilities-incomplete.xml"));
         Element opsMetadata = (Element) doc.getElementsByTagNameNS(OWS_NS, "OperationsMetadata").item(0);
-        Source domSource = new DOMSource(opsMetadata);
-        DOMResult result = iut.validate(domSource);
-        Document report = (Document) result.getNode();
-        assertNotNull("Report document is null.", report);
-        assertEquals("Unexpected number of rule violations.", 18,
-                iut.getRuleViolationCount());
-    }
-
-    @Test
-    public void validateElementInNewDocument() throws Exception {
-        URL url = this.getClass().getResource("/sch/wfs2-capabilities.sch");
-        Source schemaSource = new StreamSource(url.openStream(), url.toString());
-        SchematronValidator iut = new SchematronValidator(schemaSource,
-                "SimpleWFSPhase");
-        Document wfsDoc = docBuilder.parse(getClass().getResourceAsStream(
-                "/wfs-capabilities-incomplete.xml"));
-        Element opsMetadata = (Element) wfsDoc.getElementsByTagNameNS(OWS_NS, "OperationsMetadata").item(0);
-        // Saxon rejects DOMSource wrapping an Element, so create new Document
-        Document newDoc = docBuilder.newDocument();
-        Node newNode = newDoc.importNode(opsMetadata, true);
-        newDoc.appendChild(newNode);
-        Source domSource = new DOMSource(newDoc);
+        DOMSource domSource = new DOMSource(opsMetadata);
         DOMResult result = iut.validate(domSource);
         Document report = (Document) result.getNode();
         assertNotNull("Report document is null.", report);

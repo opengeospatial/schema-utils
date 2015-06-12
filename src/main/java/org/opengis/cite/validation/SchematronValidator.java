@@ -9,8 +9,12 @@ import java.io.PrintStream;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Source;
 import javax.xml.transform.dom.DOMResult;
+import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamSource;
 import org.apache.xml.resolver.CatalogManager;
 import org.apache.xml.resolver.tools.CatalogResolver;
@@ -30,6 +34,9 @@ import net.sf.saxon.s9api.XdmDestination;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 
 /**
  * Verifies that the content of an XML resource satisfies the constraints
@@ -46,9 +53,9 @@ public class SchematronValidator {
     private static final Logger LOGR = Logger
             .getLogger(SchematronValidator.class.getPackage().getName());
     public static final String ISO_SCHEMATRON_SVRL_NS = "http://purl.oclc.org/dsdl/svrl";
-    private static String INCLUDE_XSLT = "iso_dsdl_include.xsl";
-    private static String ABSTRACT_EXPAND_XSLT = "iso_abstract_expand.xsl";
-    private static String SVRL_REPORT_XSLT = "iso_svrl_xslt2.xsl";
+    private static final String INCLUDE_XSLT = "iso_dsdl_include.xsl";
+    private static final String ABSTRACT_EXPAND_XSLT = "iso_abstract_expand.xsl";
+    private static final String SVRL_REPORT_XSLT = "iso_svrl_xslt2.xsl";
     private Processor processor;
     private XsltTransformer validator;
     private int totalRuleViolations = 0;
@@ -58,8 +65,8 @@ public class SchematronValidator {
      * set).
      *
      * @param schema The ISO Schematron schema to use for validation.
-     * @param phase The active phase (rule subset). If {@code null} the default
-     * phase is used.
+     * @param phase The active phase (rule subset). If {@code null} all phases
+     * are active.
      * @throws Exception If any error occurs while attempting to read or
      * preprocess the schema.
      */
@@ -131,16 +138,24 @@ public class SchematronValidator {
     }
 
     /**
-     * Validates the specified source XML document and returns the results in an
-     * SVRL report.
+     * Validates the specified source XML document and returns the results as an
+     * SVRL (Schematron Validation Report Language) report.
      *
      * @param xmlSource The XML resource to validate. A DOMSource must wrap a
-     * Document node (otherwise a RuntimeException will be thrown).
+     * Document or an Element node.
      * @return A DOMResult object containing the validation results.
      */
     public DOMResult validate(Source xmlSource) {
         if (xmlSource == null) {
             throw new IllegalArgumentException("Nothing to validate.");
+        }
+        if (DOMSource.class.isInstance(xmlSource)) {
+            // Saxon XsltTransformer will reject DOMSource wrapping an Element
+            Node node = DOMSource.class.cast(xmlSource).getNode();
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                Document doc = importElement((Element) node);
+                xmlSource = new DOMSource(doc, xmlSource.getSystemId());
+            }
         }
         this.totalRuleViolations = 0;
         XdmDestination results = new XdmDestination();
@@ -168,7 +183,8 @@ public class SchematronValidator {
      * against an instance document.
      *
      * @param schema A Source to read a Schematron schema.
-     * @param phase The phase (patterns sets) to check.
+     * @param phase The active phase (pattern set); if not specified, all phases
+     * ("#ALL") are active.
      * @return A compiled stylesheet ready for execution.
      * @throws Exception If the schema cannot be compiled for any reason.
      */
@@ -198,10 +214,10 @@ public class SchematronValidator {
         stage2Transformer.setDestination(stage3Transformer);
         XdmDestination chainResult = new XdmDestination();
         stage3Transformer.setDestination(chainResult);
-        if (phase != null && !phase.equals("")) {
-            stage3Transformer.setParameter(new QName("phase"),
-                    new XdmAtomicValue(phase));
+        if (null == phase || phase.isEmpty()) {
+            phase = "#ALL";
         }
+        stage3Transformer.setParameter(new QName("phase"), new XdmAtomicValue(phase));
         // redirect messages written to System.err by default message emitter
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PrintStream console = System.err;
@@ -254,5 +270,27 @@ public class SchematronValidator {
             LOGR.warning(e.getMessage());
         }
         return Integer.parseInt(totalCount.getValue().toString());
+    }
+
+    /**
+     * Creates a DOM Document with the given Element as the document element. A
+     * deep copy of the element is imported--the source element is not altered.
+     *
+     * @param elem An Element node.
+     * @return A Document node.
+     */
+    Document importElement(Element elem) {
+        DocumentBuilder docBuilder = null;
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            docBuilder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            LOGR.log(Level.WARNING, null, ex);
+        }
+        Document newDoc = docBuilder.newDocument();
+        Node newNode = newDoc.importNode(elem, true);
+        newDoc.appendChild(newNode);
+        return newDoc;
     }
 }

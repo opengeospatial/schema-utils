@@ -1,5 +1,11 @@
 ﻿# Release Notes
 
+## 1.7 (2015-MM-DD)
+This release includes the following changes to the Schematron validator.
+
+* Accept DOMSource that wraps an Element node.
+* Activate all phases ("#ALL") if one is not specified.
+
 ## 1.6 (2015-04-28)
 This release includes no functional changes. Several dependencies and Maven 
 plugins have been updated. Accessing a special repository is no longer required.
