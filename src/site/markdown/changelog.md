@@ -1,10 +1,12 @@
 ﻿# Release Notes
 
-## 1.7 (2015-MM-DD)
-This release includes the following changes to the Schematron validator.
+## 1.7 (2015-06-24)
+This release includes the following enhancements:
 
-* Accept DOMSource that wraps an Element node.
-* Activate all phases ("#ALL") if one is not specified.
+* SchematronValidator: accept DOMSource that wraps an Element node.
+* SchematronValidator: activate all phases ("#ALL") if one is not specified.
+* Add methods `getErrors()` and `addErrors(Collection<ValidationError>)` to 
+ValidationErrorHandler.
 
 ## 1.6 (2015-04-28)
 This release includes no functional changes. Several dependencies and Maven 
