@@ -1,5 +1,11 @@
 ﻿# Release Notes
 
+## 1.8 (2016-09-DD)
+This release includes the following changes:
+
+* SchematronValidator: add validation option to produce plain text output.
+* SchematronValidator: enable default phase if phase is not specified ("#ALL" if no default phase).
+
 ## 1.7 (2015-06-24)
 This release includes the following enhancements:
 

@@ -1,13 +1,13 @@
 package org.opengis.cite.validation;
 
+import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.validation.Schema;
-
-import static junit.framework.Assert.*;
 
 import org.apache.xerces.xs.XSModel;
 import org.junit.AfterClass;

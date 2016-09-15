@@ -2,8 +2,9 @@
 <iso:schema id="SoapFault" schemaVersion="20090109"
   xmlns:iso="http://purl.oclc.org/dsdl/schematron" 
   xml:lang="en"
-  queryBinding="xslt2">
-  
+  queryBinding="xslt2"
+  defaultPhase="SoapFaultPhase">
+
   <iso:title>Rules for W3C SOAP Fault messages.</iso:title>
   
   <iso:ns prefix="env" uri="http://www.w3.org/2003/05/soap-envelope" />
