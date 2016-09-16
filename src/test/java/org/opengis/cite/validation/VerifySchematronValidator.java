@@ -3,6 +3,7 @@ package org.opengis.cite.validation;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Properties;
@@ -209,7 +210,8 @@ public class VerifySchematronValidator {
         assertEquals("Unexpected number of rule violations.", 2, iut.getRuleViolationCount());
     }
 
-    void writeResult(Result result, OutputStream out) throws TransformerConfigurationException, TransformerException {
+    void writeResult(Result result, OutputStream out)
+            throws TransformerConfigurationException, TransformerException, IOException {
         Transformer idTransformer = TransformerFactory.newInstance().newTransformer();
         Properties outProps = new Properties();
         outProps.setProperty("encoding", "UTF-8");
@@ -221,7 +223,7 @@ public class VerifySchematronValidator {
             idTransformer.transform(source, new StreamResult(out));
         } else if (result instanceof StreamResult) {
             OutputStream os = StreamResult.class.cast(result).getOutputStream();
-            System.out.print(os.toString());
+            out.write(os.toString().getBytes());
         } else {
             throw new IllegalArgumentException("Unsupported Result type:" + result.getClass());
         }

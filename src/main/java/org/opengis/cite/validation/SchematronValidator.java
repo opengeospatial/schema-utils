@@ -228,8 +228,8 @@ public class SchematronValidator {
      * 
      * @param svrlSource
      *            The source for reading the SVRL report.
-     * @return A StreamResult holding the plain text output, or null if the
-     *         transformation failed.
+     * @return A StreamResult holding the plain text output (as a byte stream),
+     *         or null if the transformation failed.
      */
     StreamResult generateTextResult(Source svrlSource) {
         XsltCompiler compiler = processor.newXsltCompiler();

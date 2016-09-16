@@ -1,6 +1,6 @@
 ﻿# Release Notes
 
-## 1.8 (2016-09-DD)
+## 1.8 (2016-09-16)
 This release includes the following changes:
 
 * SchematronValidator: add validation option to produce plain text output.
