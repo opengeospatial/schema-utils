@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.opengis.cite</groupId>
   <artifactId>schema-utils</artifactId>
-  <version>1.8</version>
+  <version>1.9-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Schema Validation Utilities</name>
   <description>
@@ -29,7 +29,7 @@
     <connection>scm:git:https://github.com/opengeospatial/schema-utils.git</connection>
     <developerConnection>scm:git:git@github.com:opengeospatial/schema-utils.git</developerConnection>
     <url>https://github.com/opengeospatial/schema-utils</url>
-    <tag>1.8</tag>
+    <tag>HEAD</tag>
   </scm>
   <issueManagement>
     <system>GitHub Issue Tracker</system>
