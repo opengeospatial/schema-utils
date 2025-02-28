@@ -19,37 +19,36 @@ import org.xml.sax.SAXException;
 
 public class VerifyXSModelBuilder {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-    private static URL entityCatalog;
+	@Rule
+	public ExpectedException thrown = ExpectedException.none();
 
-    public VerifyXSModelBuilder() {
-    }
+	private static URL entityCatalog;
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-        entityCatalog = VerifyXSModelBuilder.class
-                .getResource("/entity-catalog.xml");
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        dbf.setNamespaceAware(true);
-        dbf.newDocumentBuilder();
-    }
+	public VerifyXSModelBuilder() {
+	}
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		entityCatalog = VerifyXSModelBuilder.class.getResource("/entity-catalog.xml");
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		dbf.setNamespaceAware(true);
+		dbf.newDocumentBuilder();
+	}
 
-    @Test
-    public void buildModelFromSchemaURI() throws SAXException, IOException {
-        String NS_URI = "http://www.example.com/IPO";
-        URI schemaURI = URI.create(NS_URI);
-        XmlSchemaCompiler xsdCompiler = new XmlSchemaCompiler(entityCatalog);
-        Schema schema = xsdCompiler.compileXmlSchema(schemaURI);
-        XSModel model = XSModelBuilder.buildXMLSchemaModel(schema, NS_URI);
-        // XML Schema namespace and target namespace
-        assertEquals("Unexpected number of namespaces", 2, model
-                .getNamespaces().size());
-        assertNotNull("Element decl not found: comment",
-                model.getElementDeclaration("comment", NS_URI));
-    }
+	@AfterClass
+	public static void tearDownClass() throws Exception {
+	}
+
+	@Test
+	public void buildModelFromSchemaURI() throws SAXException, IOException {
+		String NS_URI = "http://www.example.com/IPO";
+		URI schemaURI = URI.create(NS_URI);
+		XmlSchemaCompiler xsdCompiler = new XmlSchemaCompiler(entityCatalog);
+		Schema schema = xsdCompiler.compileXmlSchema(schemaURI);
+		XSModel model = XSModelBuilder.buildXMLSchemaModel(schema, NS_URI);
+		// XML Schema namespace and target namespace
+		assertEquals("Unexpected number of namespaces", 2, model.getNamespaces().size());
+		assertNotNull("Element decl not found: comment", model.getElementDeclaration("comment", NS_URI));
+	}
+
 }
