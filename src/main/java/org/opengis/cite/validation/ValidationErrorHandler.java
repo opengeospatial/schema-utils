@@ -64,9 +64,12 @@ public class ValidationErrorHandler implements ErrorHandler, DOMErrorHandler, It
 	 * @see org.xml.sax.ErrorHandler#warning(org.xml.sax.SAXParseException)
 	 */
 	public void warning(SAXParseException spex) {
-	        if(spex.getMessage().equals("One of the grammar(s) returned from the user's grammar pool is in conflict with another grammar.")) {
-	            return;
-	        }
+		// Create exception for handling warning as errors for a specific error message
+		// see https://github.com/opengeospatial/ets-wfs20/issues/269
+		if (spex.getMessage()
+			.equals("One of the grammar(s) returned from the user's grammar pool is in conflict with another grammar.")) {
+			return;
+		}
 		addSAXError(ErrorSeverity.WARNING, spex);
 	}
 
